@@ -85,13 +85,17 @@ Visualization Manager:
           Value: true
         base_scan:
           Value: true
-        camera_depth_optical:
+        camera_color_frame:
+          Value: true
+        camera_color_optical_frame:
+          Value: true
+        camera_depth_frame:
+          Value: true
+        camera_depth_optical_frame:
           Value: true
         camera_link:
           Value: true
-        caster_back_left_link:
-          Value: true
-        caster_back_right_link:
+        caster_back_link:
           Value: true
         imu_link:
           Value: true
@@ -113,11 +117,13 @@ Visualization Manager:
               base_scan:
                 {}
               camera_link:
-                camera_depth_optical:
-                  {}
-              caster_back_left_link:
-                {}
-              caster_back_right_link:
+                camera_color_frame:
+                  camera_color_optical_frame:
+                    {}
+                camera_depth_frame:
+                  camera_depth_optical_frame:
+                    {}
+              caster_back_link:
                 {}
               imu_link:
                 {}
@@ -188,10 +194,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5353980660438538
+      Pitch: 0.5553978085517883
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.7704010009765625
+      Yaw: 1.610396385192871
     Saved: ~
 Window Geometry:
   Displays:

@@ -3,7 +3,9 @@
 sensor_processor:
   ros__parameters:
     type: structured_light
-    cutoff_min_depth: 0.2
+    ignore_points_above: .inf
+    ignore_points_below: -.inf
+    cutoff_min_depth: 0.4
     cutoff_max_depth: 3.25
     normal_factor_a: 0.000611
     normal_factor_b:  0.003587

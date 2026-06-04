@@ -34,6 +34,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(CURL REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 find_package(Threads REQUIRED)
@@ -119,6 +120,7 @@ ament_target_dependencies(${PROJECT_NAME}_library
 target_link_libraries(${PROJECT_NAME}_library
   ${PROJECT_NAME}_pcl_types
   ${Boost_LIBRARIES}
+  CURL::libcurl
   pthread  
 )
 

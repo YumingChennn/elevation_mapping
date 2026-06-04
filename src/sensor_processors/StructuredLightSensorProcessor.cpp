@@ -123,12 +123,35 @@ bool StructuredLightSensorProcessor::computeVariances(const PointCloudType::Cons
   return true;
 }
 
+// bool StructuredLightSensorProcessor::filterPointCloudSensorType(const PointCloudType::Ptr pointCloud) {
+//   pcl::PassThrough<pcl::PointXYZRGBConfidenceRatio> passThroughFilter;
+//   PointCloudType tempPointCloud;
+
+//   // cutoff points with z values
+//   passThroughFilter.setInputCloud(pointCloud);
+//   passThroughFilter.setFilterFieldName("z");
+//   passThroughFilter.setFilterLimits(sensorParameters_.at("cutoff_min_depth"), sensorParameters_.at("cutoff_max_depth"));
+//   passThroughFilter.filter(tempPointCloud);
+//   pointCloud->swap(tempPointCloud);
+
+//   return true;
+// }
+
 bool StructuredLightSensorProcessor::filterPointCloudSensorType(const PointCloudType::Ptr pointCloud) {
+  // Step 1: 移除 NaN 点 (防止 SIGFPE 的关键步骤)
+  // 使用 PCL 內建函式移除所有座標 (x, y, z) 包含 NaN 或 Inf 的點
+  PointCloudType::Ptr tempPointCloudWithoutNaN(new PointCloudType);
+  std::vector<int> indices;
+  // 將原始 pointCloud 中不含 NaN 的點拷貝到 tempPointCloudWithoutNaN
+  pcl::removeNaNFromPointCloud(*pointCloud, *tempPointCloudWithoutNaN, indices);
+  pointCloud->swap(*tempPointCloudWithoutNaN); // 將原始 pointCloud 替換為過濾後的版本
+
+  // Step 2: 進行 Z 軸 (深度) PassThrough 距離過濾
   pcl::PassThrough<pcl::PointXYZRGBConfidenceRatio> passThroughFilter;
   PointCloudType tempPointCloud;
 
   // cutoff points with z values
-  passThroughFilter.setInputCloud(pointCloud);
+  passThroughFilter.setInputCloud(pointCloud); // 使用 Step 1 過濾後的點雲
   passThroughFilter.setFilterFieldName("z");
   passThroughFilter.setFilterLimits(sensorParameters_.at("cutoff_min_depth"), sensorParameters_.at("cutoff_max_depth"));
   passThroughFilter.filter(tempPointCloud);
